@@ -51,7 +51,11 @@ def preparation():
 
     while True:
         usr_input = input("\nEnter the minimum number of shares to reconstruct: ")
-        if usr_input.isdigit() and int(usr_input) <= num_shares:
+        if usr_input == str(1):
+            min_val = 1
+            print("\nYou have chosen to reconstruct the secret from only one share. Interesting choice.")
+            break
+        elif usr_input.isdigit() and int(usr_input) <= num_shares:
             min_val = int(usr_input)
             break
         else:
@@ -70,7 +74,7 @@ def preparation():
 
     print("\nIt is important you give each person the ordered pair, not just the x or y value.")
     print("\nRemember, you need %s shares to reconstruct the secret.\nBe careful how you distribute them" % min_val)
-    print("If you don't have enough shares, you will not be able to reconstruct the secret.")
+    print("\nIf you don't have enough shares, you will not be able to reconstruct the secret. You can have more than the minimum.")
 
 ################################## Reconstruction ###
 
@@ -79,11 +83,11 @@ def reconstruction():
     print("-------")
     
     given_shares = []
-    print("\nEnter the shares you have, starting with the x then y.\nSend a EOF Error when you are finished.\n")
+    print("\nEnter the shares you have, starting with the x then y.\nSend a Keyboard Interrupt when you are finished.\n")
     while True:
         try:
             given_shares.append((int(input("Enter a share number: ")), int(input("Enter the share's value: "))))
-        except EOFError:
+        except KeyboardInterrupt:
             break
         except ValueError:
             print("Please enter a number.")
